@@ -5,6 +5,7 @@ import 'package:quickq/commons/custom/onboarding_card.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
+import 'package:quickq/features/authentication/sign_in.dart';
 import 'package:quickq/features/authentication/sign_up.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -15,10 +16,17 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  //Logic to Navigate to Sign Up
   void signup(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
   }
 
+  //Logic to Navigate to Sign In
+  void signin(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+  }
+
+  //Index for when the container is selected to know which one is selected
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -31,6 +39,7 @@ class _WelcomePageState extends State<WelcomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                //Text with brand name, Tagline
                 Text(
                   'QUICKIE',
                   style: AppTextTheme.tertiaryText.copyWith(
@@ -61,6 +70,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
                 minispacebtwn,
+                //Brief Brand Description
                 Text(
                   'Choose from any cafeteria on campus and see what’s cooking. Browse daily menus, check meal availability, and buy your ticket in seconds—anytime, anywhere, hassle-free. Pay, get your QR code, and skip the line. Quickie makes it that easy.',
                   style: AppTextTheme.tinyMeduim.copyWith(
@@ -70,6 +80,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   textAlign: TextAlign.center,
                 ),
                 spacebtwn,
+                //Container to select which user: Staff or Student
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -92,6 +103,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   ],
                 ),
                 spacebtwn,
+                //If user already has an account
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -112,6 +124,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   ],
                 ),
                 Spacer(),
+                //proceed Custom button
                 CustomRedButton(
                   text: 'Proceed',
                   onPressed: () => signup(context),
