@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:quickq/commons/appbar/custom_appbar.dart';
+import 'package:quickq/commons/custom/custom_red_button.dart';
+import 'package:quickq/commons/custom/custom_textfield.dart';
+import 'package:quickq/constants/colors.dart';
+import 'package:quickq/constants/sizes.dart';
+import 'package:quickq/features/authentication/create_pin.dart';
+import 'package:quickq/commons/themes/text_theme.dart';
+import 'package:quickq/features/authentication/sign_up.dart';
+
+class SignIn extends StatelessWidget {
+  const SignIn({super.key});
+
+  void createPin(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CreatePin()),
+    );
+  }
+
+  void signup(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: CustomAppBar(title: 'Welcome Back', showLeading: false),
+      body: Padding(
+        padding: paddingRoundOne,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomTextfield(
+              hint: 'Matric Number',
+              keyboardType: TextInputType.text,
+            ),
+            spacebtwn,
+            CustomTextfield(
+              hint: 'Password',
+              keyboardType: TextInputType.text,
+              obscureText: true,
+              isPassword: true,
+            ),
+            spacebtwn,
+            CustomRedButton(text: 'Login', onPressed: () => createPin(context)),
+            spacebtwn,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Don't have an account?",
+                  style: AppTextTheme.tinytwo,
+                  textAlign: TextAlign.center,
+                ),
+                spaceRowbtwn,
+                GestureDetector(
+                  onTap: () => signup(context),
+                  child: Text(
+                    "Sign up",
+                    style: AppTextTheme.tiny,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
