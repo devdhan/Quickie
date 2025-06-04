@@ -114,7 +114,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                     spaceRowbtwn,
                     GestureDetector(
-                      onTap: () => signup(context),
+                      onTap: () => signin(context),
                       child: Text(
                         "Sign In",
                         style: AppTextTheme.tiny,
