@@ -49,7 +49,7 @@ class _EditProfileState extends State<EditProfile> {
                 spacebtwn,
                 CustomEditProfileField(hint: 'Password'),
                 spacebtwn,
-                CustomEditProfileField(hint: 'PIN'),
+                CustomEditProfileField(hint: 'PIN Option'),
                 Spacer(),
                 CustomRedButton(text: 'Update Profile', onPressed: () {}),
               ],
