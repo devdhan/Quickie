@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
-import 'package:quickq/dashboard.dart';
+import 'package:quickq/features/mainhomescreen/presentation/dashboard.dart';
 import 'package:quickq/features/mainhomescreen/presentation/cafeteria.dart';
 import 'package:quickq/features/mainhomescreen/presentation/profile.dart';
 import 'package:quickq/features/mainhomescreen/presentation/ticket.dart';
