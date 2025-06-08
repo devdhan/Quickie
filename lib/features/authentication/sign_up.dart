@@ -6,11 +6,31 @@ import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
 import 'package:quickq/features/authentication/sign_in.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController matricNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   void signin(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+  }
+
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    matricNumberController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -24,16 +44,19 @@ class SignUp extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextfield(
+              controller: fullNameController,
               hint: 'Full Name',
               keyboardType: TextInputType.text,
             ),
             spacebtwn,
             CustomTextfield(
+              controller: matricNumberController,
               hint: 'Matric Number',
               keyboardType: TextInputType.text,
             ),
             spacebtwn,
             CustomTextfield(
+              controller: passwordController,
               hint: 'Password',
               obscureText: true,
               keyboardType: TextInputType.text,
@@ -41,6 +64,7 @@ class SignUp extends StatelessWidget {
             ),
             spacebtwn,
             CustomTextfield(
+              controller: confirmPasswordController,
               hint: 'Confirm Password',
               obscureText: true,
               keyboardType: TextInputType.text,

@@ -8,9 +8,14 @@ import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
 import 'package:quickq/features/navigation/home.dart';
 
-class CreatePin extends StatelessWidget {
+class CreatePin extends StatefulWidget {
   const CreatePin({super.key});
 
+  @override
+  State<CreatePin> createState() => _CreatePinState();
+}
+
+class _CreatePinState extends State<CreatePin> {
   void home(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }

@@ -8,10 +8,12 @@ class CustomTextfield extends StatefulWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final bool isPassword;
+  final TextEditingController controller;
 
   const CustomTextfield({
     super.key,
     required this.hint,
+    required this.controller,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.isPassword = false,
@@ -39,6 +41,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.controller,
       obscureText: _obscureText,
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(

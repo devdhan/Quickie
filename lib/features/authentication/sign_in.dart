@@ -8,8 +8,16 @@ import 'package:quickq/features/authentication/create_pin.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/features/authentication/sign_up.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({super.key});
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  final TextEditingController matricNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   void createPin(BuildContext context) {
     Navigator.push(
@@ -23,6 +31,13 @@ class SignIn extends StatelessWidget {
   }
 
   @override
+  void dispose() {
+    matricNumberController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -33,11 +48,13 @@ class SignIn extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextfield(
+              controller: matricNumberController,
               hint: 'Matric Number',
               keyboardType: TextInputType.text,
             ),
             spacebtwn,
             CustomTextfield(
+              controller: passwordController,
               hint: 'Password',
               keyboardType: TextInputType.text,
               obscureText: true,
