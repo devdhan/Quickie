@@ -26,7 +26,7 @@ class SplashScreen extends StatelessWidget {
               width: splashSize,
               height: splashSize,
               fit: BoxFit.contain,
-              //To handle error incase the animation does not load
+              //To handle error incase the animation does not load up
               errorBuilder: (context, error, stackTrace) {
                 return Icon(
                   Icons.error_outline,
