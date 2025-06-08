@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
-import 'package:quickq/onboarding/presentation/welcome_page.dart';
+import 'package:quickq/features/onboarding/presentation/welcome_page.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

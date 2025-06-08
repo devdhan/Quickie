@@ -5,9 +5,9 @@ import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
 import 'package:quickq/dashboard.dart';
-import 'package:quickq/features/mainhomescreen/cafeteria.dart';
-import 'package:quickq/features/mainhomescreen/profile.dart';
-import 'package:quickq/features/mainhomescreen/ticket.dart';
+import 'package:quickq/features/mainhomescreen/presentation/cafeteria.dart';
+import 'package:quickq/features/mainhomescreen/presentation/profile.dart';
+import 'package:quickq/features/mainhomescreen/presentation/ticket.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

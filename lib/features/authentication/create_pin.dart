@@ -6,7 +6,7 @@ import 'package:quickq/commons/custom/custom_red_button.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
-import 'package:quickq/features/mainhomescreen/home.dart';
+import 'package:quickq/features/navigation/home.dart';
 
 class CreatePin extends StatelessWidget {
   const CreatePin({super.key});
