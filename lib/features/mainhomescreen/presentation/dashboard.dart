@@ -6,9 +6,14 @@ import 'package:quickq/commons/custom/quick_action.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
+import 'package:quickq/features/mainhomescreen/presentation/profile.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
+
+  void profile(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +102,7 @@ class Dashboard extends StatelessWidget {
                       QuickAction(
                         title: 'Profile',
                         icon: Icons.account_circle,
-                        onTap: () {
-                          print('profile');
-                        },
+                        onTap: () => profile(context),
                       ),
                     ],
                   ),
