@@ -22,58 +22,71 @@ class DashboardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: width ?? 250.w,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: cardborder, width: 1),
-          boxShadow: [
-            BoxShadow(
-              color: fillHintColor,
-              spreadRadius: 1,
-              blurRadius: 8,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Icon
-              Container(
-                width: 35.w,
-                height: 35.h,
-                decoration: BoxDecoration(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: width ?? (constraints.maxWidth > 600 ? 200.w : 0.7.sw),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.r),
+              border: Border.all(color: cardborder, width: 1),
+              boxShadow: [
+                BoxShadow(
                   color: fillHintColor,
-                  borderRadius: BorderRadius.circular(8.r),
+                  spreadRadius: 1,
+                  blurRadius: 8,
+                  offset: Offset(0, 2),
                 ),
-                child: Icon(icon, size: 24.sp, color: primaryTextColor),
-              ),
-              SizedBox(height: 8.h),
-              // Title and Subtitle
-              Column(
+              ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(12.w),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    title,
-                    style: AppTextTheme.boldText,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  // Icon
+                  Container(
+                    width: 32.w,
+                    height: 32.h,
+                    decoration: BoxDecoration(
+                      color: fillHintColor,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Icon(icon, size: 20.sp, color: primaryTextColor),
                   ),
-                  SizedBox(height: 2.h),
-                  Text(subtitle, style: AppTextTheme.tiny),
+                  SizedBox(height: 8.h),
+                  // Title and Subtitle
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: AppTextTheme.boldText.copyWith(
+                            fontSize: 14.sp,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 2.h),
+                        Text(
+                          subtitle,
+                          style: AppTextTheme.tiny.copyWith(fontSize: 12.sp),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
