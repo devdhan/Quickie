@@ -79,6 +79,7 @@ class _ProfileState extends State<Profile> {
                   minispacebtwn,
                   ProfileList(text: 'Log out', onTap: () => logout(context)),
                 ],
+                //changes
               ),
             ),
           ),
