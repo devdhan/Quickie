@@ -41,7 +41,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: CustomAppBar(title: 'Welcome Back', showLeading: false),
+      appBar: CustomAppBar(title: 'Welcome Back', showLeading: true),
       body: Padding(
         padding: paddingRoundOne,
         child: Column(

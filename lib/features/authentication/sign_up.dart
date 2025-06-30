@@ -6,6 +6,7 @@ import 'package:quickq/commons/enums/user_type.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
+import 'package:quickq/features/authentication/create_pin.dart';
 import 'package:quickq/features/authentication/sign_in.dart';
 
 class SignUp extends StatefulWidget {
@@ -27,6 +28,14 @@ class _SignUpState extends State<SignUp> {
       TextEditingController();
 
   bool _isLoading = false;
+
+  /// Navigate to Create Pin page
+  void _navigateToDashboard(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const CreatePin()),
+    );
+  }
 
   /// Navigate to Sign In page
   void _navigateToSignIn(BuildContext context) {
@@ -51,7 +60,7 @@ class _SignUpState extends State<SignUp> {
     setState(() => _isLoading = true);
 
     try {
-      // TODO: Implement actual sign up logic here
+      //Implement  sign up logic here
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
 
       // Navigate to success page or main app
@@ -102,9 +111,9 @@ class _SignUpState extends State<SignUp> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  _navigateToSignIn(context);
+                  _navigateToDashboard(context);
                 },
-                child: const Text('Continue to Sign In'),
+                child: const Text('Continue to Create Pin'),
               ),
             ],
           ),
@@ -118,8 +127,8 @@ class _SignUpState extends State<SignUp> {
       _showErrorDialog('Full name is required');
       return false;
     }
-    if (_fullNameController.text.trim().length < 2) {
-      _showErrorDialog('Full name must be at least 2 characters');
+    if (_fullNameController.text.trim().length < 3) {
+      _showErrorDialog('Full name must be at least 3 characters');
       return false;
     }
 
@@ -180,10 +189,8 @@ class _SignUpState extends State<SignUp> {
 
     if (widget.userType == UserType.student) {
       // Example matric number validation (adjust based on your institution's format)
-      if (!RegExp(
-        r'^[A-Z]{2,3}\/\d{4}\/\d{3,4}$',
-      ).hasMatch(value.toUpperCase())) {
-        return 'Please enter a valid matric number (e.g., CSC/2023/001)';
+      if (!RegExp(r'^BU\d{2}[A-Z]{3}\d{4}$').hasMatch(value.toUpperCase())) {
+        return 'Please enter a valid matric number (e.g., BU21CSC1001)';
       }
     } else {
       // Staff ID validation
@@ -197,7 +204,7 @@ class _SignUpState extends State<SignUp> {
   /// Get ID field hint based on user type
   String get _idHint =>
       widget.userType == UserType.student
-          ? 'Matric Number (e.g., CSC/2023/001)'
+          ? 'Matric Number (e.g., BU21CSC1001)'
           : 'Staff ID';
 
   /// Get page title based on user type
