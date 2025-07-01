@@ -39,6 +39,12 @@ class AppTextTheme {
     fontWeight: FontWeight.bold,
     color: primaryTextColor,
   );
+  static final TextStyle boldTextTwo = TextStyle(
+    fontSize: primaryTextSize,
+    fontFamily: 'PlusJakartaSans',
+    fontWeight: FontWeight.bold,
+    color: secondaryColor,
+  );
   static final TextStyle secondaryText = TextStyle(
     fontSize: secondaryTextSize,
     fontFamily: 'PlusJakartaSans',
