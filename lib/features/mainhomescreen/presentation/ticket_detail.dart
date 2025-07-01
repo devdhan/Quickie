@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 
+//LOTS OF STATIC UIs
 class TicketDetailPage extends StatelessWidget {
   final Map<String, dynamic> ticket;
   final bool isActive;
