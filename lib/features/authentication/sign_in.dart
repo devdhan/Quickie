@@ -4,9 +4,9 @@ import 'package:quickq/commons/custom/custom_red_button.dart';
 import 'package:quickq/commons/custom/custom_textfield.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
-import 'package:quickq/features/authentication/create_pin.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/features/authentication/sign_up.dart';
+import 'package:quickq/features/mainhomescreen/presentation/dashboard.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -19,10 +19,10 @@ class _SignInState extends State<SignIn> {
   final TextEditingController matricNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void createPin(BuildContext context) {
+  void dashboard(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CreatePin()),
+      MaterialPageRoute(builder: (context) => Dashboard()),
     );
   }
 
@@ -61,7 +61,7 @@ class _SignInState extends State<SignIn> {
               isPassword: true,
             ),
             spacebtwn,
-            CustomRedButton(text: 'Login', onPressed: () => createPin(context)),
+            CustomRedButton(text: 'Login', onPressed: () => dashboard(context)),
             spacebtwn,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

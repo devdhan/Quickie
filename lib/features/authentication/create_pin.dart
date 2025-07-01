@@ -16,6 +16,9 @@ class CreatePin extends StatefulWidget {
 }
 
 class _CreatePinState extends State<CreatePin> {
+  //Store pin Value
+  String _pin = '';
+
   void home(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
@@ -60,6 +63,11 @@ class _CreatePinState extends State<CreatePin> {
               textStyle: AppTextTheme.regularText,
               fieldWidth: 50.w,
               margin: otpspacebtwn,
+              onSubmit: (pin) {
+                setState(() {
+                  _pin = pin;
+                });
+              },
             ),
             Spacer(),
             CustomRedButton(
