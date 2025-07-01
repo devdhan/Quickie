@@ -24,7 +24,7 @@ class _ProfileState extends State<Profile> {
   }
 
   void logout(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => WelcomePage()),
     );

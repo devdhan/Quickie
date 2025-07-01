@@ -107,6 +107,7 @@ class _DashboardState extends State<Dashboard> {
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
+                                duration: Durations.short1,
                                 content: Text(
                                   'Proceed to payment for ${meal['name']}',
                                 ),

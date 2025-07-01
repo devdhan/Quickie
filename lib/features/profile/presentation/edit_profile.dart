@@ -23,7 +23,7 @@ class _EditProfileState extends State<EditProfile> {
       backgroundColor: backgroundColor,
       appBar: CustomAppBar(title: '', showLeading: true),
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Center(
             child: Column(
@@ -50,7 +50,8 @@ class _EditProfileState extends State<EditProfile> {
                 CustomEditProfileField(hint: 'Password'),
                 spacebtwn,
                 CustomEditProfileField(hint: 'PIN Option'),
-                Spacer(),
+                spacebtwn,
+                spacebtwn,
                 CustomRedButton(text: 'Update Profile', onPressed: () {}),
               ],
             ),
