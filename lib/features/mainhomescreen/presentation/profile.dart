@@ -1,11 +1,11 @@
 import 'package:avatar_plus/avatar_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quickq/commons/custom/logout_dialog.dart';
 import 'package:quickq/commons/custom/profile_list.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
-import 'package:quickq/features/onboarding/presentation/welcome_page.dart';
 import 'package:quickq/features/profile/presentation/edit_profile.dart';
 
 class Profile extends StatefulWidget {
@@ -20,13 +20,6 @@ class _ProfileState extends State<Profile> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EditProfile()),
-    );
-  }
-
-  void logout(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => WelcomePage()),
     );
   }
 
@@ -77,9 +70,15 @@ class _ProfileState extends State<Profile> {
                   minispacebtwn,
                   ProfileList(text: 'Support', onTap: () {}),
                   minispacebtwn,
-                  ProfileList(text: 'Log out', onTap: () => logout(context)),
+                  ProfileList(
+                    text: 'Log out',
+                    onTap:
+                        () => showDialog(
+                          context: context,
+                          builder: (context) => LogoutDialog(),
+                        ),
+                  ),
                 ],
-                //changes
               ),
             ),
           ),
