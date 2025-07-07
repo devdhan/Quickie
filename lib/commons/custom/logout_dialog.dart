@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quickq/auth_service.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/features/onboarding/presentation/welcome_page.dart';
@@ -7,14 +9,19 @@ import 'package:quickq/features/onboarding/presentation/welcome_page.dart';
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
 
-  void logout(BuildContext context) {
-    //close the dialog box first, then navigate
-    Navigator.of(context).pop();
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => WelcomePage()),
-      (route) => false,
-    );
+  void logout(BuildContext context) async {
+    try {
+      await authService.value.signOut();
+      //close the dialog box first, then navigate
+      Navigator.of(context).pop();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => WelcomePage()),
+        (route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
   }
 
   @override

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quickq/auth_service.dart';
 import 'package:quickq/commons/appbar/custom_appbar.dart';
 import 'package:quickq/commons/custom/custom_red_button.dart';
 import 'package:quickq/commons/custom/custom_textfield.dart';
@@ -29,14 +31,6 @@ class _SignUpState extends State<SignUp> {
 
   bool _isLoading = false;
 
-  /// Navigate to Create Pin page
-  void _navigateToDashboard(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const CreatePin()),
-    );
-  }
-
   /// Navigate to Sign In page
   void _navigateToSignIn(BuildContext context) {
     Navigator.pushReplacement(
@@ -65,7 +59,21 @@ class _SignUpState extends State<SignUp> {
 
       // Navigate to success page or main app
       if (mounted) {
-        _showSuccessDialog();
+        try {
+          await authService.value.createAccount(
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => CreatePin()),
+            (route) => false,
+          );
+        } on FirebaseAuthException catch (e) {
+          setState(() {
+            _showErrorDialog(e.message ?? 'There is an error');
+          });
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -90,30 +98,6 @@ class _SignUpState extends State<SignUp> {
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Text('OK'),
-              ),
-            ],
-          ),
-    );
-  }
-
-  /// Show success dialog
-  void _showSuccessDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Success'),
-            content: Text(
-              '${widget.userType == UserType.student ? 'Student' : 'Staff'} account created successfully!',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _navigateToDashboard(context);
-                },
-                child: const Text('Continue to Create Pin'),
               ),
             ],
           ),

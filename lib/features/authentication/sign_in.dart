@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quickq/auth_service.dart';
 import 'package:quickq/commons/appbar/custom_appbar.dart';
 import 'package:quickq/commons/custom/custom_red_button.dart';
 import 'package:quickq/commons/custom/custom_textfield.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/constants/sizes.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
+import 'package:quickq/features/authentication/reset_password.dart';
 import 'package:quickq/features/authentication/sign_up.dart';
 import 'package:quickq/features/navigation/home.dart';
 
@@ -16,20 +19,42 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final TextEditingController matricNumberController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  String errorMessage = '';
 
-  void dashboard(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+  void dashboard(BuildContext context) async {
+    try {
+      await authService.value.signIn(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+        (route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message ?? 'this is not working';
+      });
+    }
   }
 
   void signup(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
   }
 
+  void resetpassword(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResetPassword()),
+    );
+  }
+
   @override
   void dispose() {
-    matricNumberController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -45,8 +70,8 @@ class _SignInState extends State<SignIn> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextfield(
-              controller: matricNumberController,
-              hint: 'Matric Number',
+              controller: emailController,
+              hint: 'Email Address',
               keyboardType: TextInputType.text,
             ),
             spacebtwn,
@@ -56,6 +81,20 @@ class _SignInState extends State<SignIn> {
               keyboardType: TextInputType.text,
               obscureText: true,
               isPassword: true,
+            ),
+            const SizedBox(height: 5.0),
+            GestureDetector(
+              onTap: () => resetpassword(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Forgot Password?",
+                    style: AppTextTheme.tiny,
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
             ),
             spacebtwn,
             CustomRedButton(text: 'Login', onPressed: () => dashboard(context)),
@@ -79,6 +118,8 @@ class _SignInState extends State<SignIn> {
                 ),
               ],
             ),
+            spacebtwn,
+            Text(errorMessage, style: TextStyle(color: secondaryColor)),
           ],
         ),
       ),
