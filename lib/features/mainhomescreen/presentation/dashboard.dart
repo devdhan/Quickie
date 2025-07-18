@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quickq/commons/appbar/custom_appbar.dart';
 import 'package:quickq/commons/custom/cafeteria_card.dart';
+import 'package:quickq/commons/custom/meal_not_available_dialog.dart';
+import 'package:quickq/commons/custom/ticket_error_dialog.dart';
 import 'package:quickq/features/mainhomescreen/data/datasource/cafeteria_data.dart';
 import 'package:quickq/features/mainhomescreen/domain/entities/cafeteria_items.dart';
 import 'package:quickq/constants/colors.dart';
 import 'package:quickq/commons/themes/text_theme.dart';
+import 'package:quickq/features/mainhomescreen/presentation/availability_time.dart';
+import 'package:quickq/commons/custom/served_confirmation_dialog.dart';
+import 'package:quickq/features/mainhomescreen/presentation/menu.dart';
+import 'package:quickq/features/payment/payment_confirmation.dart';
+import 'package:quickq/features/payment/payment_initiate.dart';
+import 'package:quickq/features/ticket/ticket_qr_display.dart';
+import 'package:quickq/features/ticket/ticket_status.dart';
+import 'package:quickq/features/ticket/ticket_validation.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -59,8 +69,7 @@ class _DashboardState extends State<Dashboard> {
               SizedBox(height: 12.h),
               ListView.separated(
                 shrinkWrap: true,
-                physics:
-                    const NeverScrollableScrollPhysics(), // Disable ListView's own scrolling
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: meals.length,
                 separatorBuilder: (context, index) => SizedBox(height: 12.h),
                 itemBuilder: (context, index) {
@@ -104,17 +113,134 @@ class _DashboardState extends State<Dashboard> {
                               borderRadius: BorderRadius.circular(8.r),
                             ),
                           ),
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                duration: Durations.short1,
-                                content: Text(
-                                  'Proceed to payment for ${meal['name']}',
-                                ),
+                          onPressed: () async {
+                            // Step 1: Show Availability Time
+                            final availabilityResult = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => AvailabilityTimeScreen(
+                                      mealName: meal['name'],
+                                      onCheckMenu: () {
+                                        Navigator.pop(context, 'check_menu');
+                                      },
+                                    ),
                               ),
                             );
+                            if (availabilityResult == 'check_menu') {
+                              // Step 2: Show Menu
+                              final menuResult = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => MenuScreen(
+                                        mealName: meal['name'],
+                                        onBuyTicket: () {
+                                          Navigator.pop(context, 'buy_ticket');
+                                        },
+                                      ),
+                                ),
+                              );
+                              if (menuResult == 'buy_ticket') {
+                                // Step 3: Dummy meal availability logic
+                                final mealAvailable =
+                                    meal['name'] != 'Pounded Yam';
+                                if (!mealAvailable) {
+                                  showDialog(
+                                    context: context,
+                                    builder:
+                                        (context) =>
+                                            const MealNotAvailableDialog(),
+                                  );
+                                  return;
+                                }
+                                // Step 4: Payment Initiate
+                                final paymentResult = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => PaymentInitiateScreen(
+                                          onProceed: () {
+                                            Navigator.pop(
+                                              context,
+                                              'proceed_payment',
+                                            );
+                                          },
+                                        ),
+                                  ),
+                                );
+                                if (paymentResult == 'proceed_payment') {
+                                  // Step 5: Payment Confirmation
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) =>
+                                              PaymentConfirmationScreen(
+                                                onConfirmed: () {
+                                                  Navigator.pop(
+                                                    context,
+                                                    'confirmed',
+                                                  );
+                                                },
+                                              ),
+                                    ),
+                                  );
+                                  // Step 6: Show Ticket QR
+                                  final qrResult = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => TicketQRDisplayScreen(
+                                            onCheckStatus: () {
+                                              Navigator.pop(
+                                                context,
+                                                'check_status',
+                                              );
+                                            },
+                                            onValidate: () async {
+                                              // Simulate ticket validation
+                                              final isValid =
+                                                  true; // Dummy logic
+                                              Navigator.pop(
+                                                context,
+                                                isValid ? 'served' : 'invalid',
+                                              );
+                                            },
+                                          ),
+                                    ),
+                                  );
+                                  if (qrResult == 'check_status') {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                const TicketStatusScreen(),
+                                      ),
+                                    );
+                                  } else if (qrResult == 'served') {
+                                    showDialog(
+                                      context: context,
+                                      builder:
+                                          (context) =>
+                                              const ServedConfirmationDialog(),
+                                    );
+                                  } else if (qrResult == 'invalid') {
+                                    showDialog(
+                                      context: context,
+                                      builder:
+                                          (context) => const TicketErrorDialog(
+                                            errorMessage:
+                                                'Ticket is used or invalid!',
+                                          ),
+                                    );
+                                  }
+                                }
+                              }
+                            }
                           },
-                          child: const Text('Buy Ticket'),
+                          child: const Text('Check Availability'),
                         ),
                       ],
                     ),

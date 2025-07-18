@@ -38,7 +38,7 @@ class SplashScreen extends StatelessWidget {
           ),
           minispacebtwn,
           Text(
-            'QUICKIE',
+            'QUICKQ',
             style: AppTextTheme.tertiaryText.copyWith(letterSpacing: 1.2),
           ),
         ],
