@@ -12,7 +12,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  // Must come back and start this again
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
